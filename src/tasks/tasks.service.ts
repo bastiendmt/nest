@@ -14,6 +14,10 @@ export class TasksService {
     private taskRepository: TasksRepository,
   ) {}
 
+  getTasks(filterDto: GetTasksFilterDto): Promise<Task[]> {
+    return this.taskRepository.getTasks(filterDto);
+  }
+
   // getAllTasks() {
   //   return this.tasks;
   // }
@@ -62,9 +66,10 @@ export class TasksService {
     }
   }
 
-  // updateTaskStatus(id: string, status: TaskStatus): Task {
-  //   const task = this.getTaskById(id);
-  //   task.status = status;
-  //   return task;
-  // }
+  async updateTaskStatus(id: string, status: TaskStatus): Promise<Task> {
+    const task = await this.getTaskById(id);
+    task.status = status;
+    await this.taskRepository.save(task);
+    return task;
+  }
 }
