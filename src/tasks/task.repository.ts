@@ -7,7 +7,7 @@ import { TaskStatus } from './task.-status.enum';
 import { Task } from './task.entity';
 
 export class TasksRepository extends Repository<Task> {
-  private logger = new Logger('TaskRepository', true);
+  private logger = new Logger('TaskRepository', { timestamp: true });
 
   async createTask(createTaskDto: CreateTaskDto, user: User): Promise<Task> {
     const { title, description } = createTaskDto;
