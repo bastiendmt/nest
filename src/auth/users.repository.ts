@@ -7,9 +7,8 @@ import { AuthCredentialsDto } from './dto/auth-credentials.dto';
 import { User } from './user.entity';
 import * as bcrypt from 'bcrypt';
 
-export class UserRepository extends Repository<User> {
+export class UsersRepository extends Repository<User> {
   async createUser(authCredentialsDto: AuthCredentialsDto): Promise<void> {
-    console.log('create user');
     const { username, password } = authCredentialsDto;
 
     const salt = await bcrypt.genSalt();
@@ -22,7 +21,7 @@ export class UserRepository extends Repository<User> {
       if (error.code === '23505') {
         throw new ConflictException('Username already exists');
       }
-      throw new InternalServerErrorException('Something went wrong');
+      throw new InternalServerErrorException();
     }
   }
 }
